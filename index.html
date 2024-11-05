@@ -38,6 +38,7 @@
     <table>
         <thead>
             <tr>
+                <th>#</th>
                 <th>Start Time</th>
                 <th>Stop Time</th>
             </tr>
@@ -56,15 +57,16 @@
             if (isRunning) {
                 // Stop the timer
                 const stopTime = now.toLocaleTimeString();
-                currentRow.cells[1].textContent = stopTime;
+                currentRow.cells[2].textContent = stopTime;
                 document.getElementById('startStopBtn').textContent = 'Start';
                 isRunning = false;
             } else {
                 // Start the timer
                 startTime = now.toLocaleTimeString();
                 currentRow = document.getElementById('timeTableBody').insertRow();
-                currentRow.insertCell(0).textContent = startTime;
-                currentRow.insertCell(1).textContent = '';
+                currentRow.insertCell(0).textContent = document.getElementById('timeTableBody').rows.length ;
+                currentRow.insertCell(1).textContent = startTime;
+                currentRow.insertCell(2).textContent = '';
                 document.getElementById('startStopBtn').textContent = 'Stop';
                 isRunning = true;
             }
