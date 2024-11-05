@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracker</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Time Tracker</h1>
+    <button id="startStopBtn">Start</button>
+    <button id="resetBtn">Reset</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Start Time</th>
+                <th>Stop Time</th>
+            </tr>
+        </thead>
+        <tbody id="timeTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        let startTime = null;
+        let isRunning = false;
+        let currentRow = null;
+
+        document.getElementById('startStopBtn').addEventListener('click', () => {
+            const now = new Date();
+            if (isRunning) {
+                // Stop the timer
+                const stopTime = now.toLocaleTimeString();
+                currentRow.cells[1].textContent = stopTime;
+                document.getElementById('startStopBtn').textContent = 'Start';
+                isRunning = false;
+            } else {
+                // Start the timer
+                startTime = now.toLocaleTimeString();
+                currentRow = document.getElementById('timeTableBody').insertRow();
+                currentRow.insertCell(0).textContent = startTime;
+                currentRow.insertCell(1).textContent = '';
+                document.getElementById('startStopBtn').textContent = 'Stop';
+                isRunning = true;
+            }
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (window.confirm("Are you sure you want to reset? This will clear all time entries.")) {
+                document.getElementById('timeTableBody').innerHTML = '';
+                document.getElementById('startStopBtn').textContent = 'Start';
+                isRunning = false;
+                startTime = null;
+                currentRow = null;
+            }
+        });
+    </script>
+</body>
+
+</html>
