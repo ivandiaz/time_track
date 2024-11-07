@@ -34,8 +34,9 @@
 <body>
     <h1>Time Tracker</h1>
     <button id="startStopBtn">Start</button>
-    <button id="resetBtn">Reset</button>
+    <button id="removeLastTimestampBtn">-</button>
     <button id="addTableBtn">Add Table</button>
+    <button id="resetBtn">Reset</button>
     <div id="tablesContainer">
         <table>
             <thead>
@@ -115,6 +116,12 @@
             `;
             document.getElementById('tablesContainer').appendChild(newTable);
             currentTableBody = newTable.querySelector('tbody');
+        });
+
+        document.getElementById('removeLastTimestampBtn').addEventListener('click', () => {
+            if (currentTableBody.rows.length > 0) {
+                currentTableBody.deleteRow(currentTableBody.rows.length - 1);
+            }
         });
     </script>
 </body>
