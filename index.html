@@ -35,7 +35,7 @@
     <h1>Time Tracker</h1>
     <button id="startStopBtn">Start</button>
     <button id="resetBtn">Reset</button>
-    <button id="addTableBtn">+</button>
+    <button id="addTableBtn">Add Table</button>
     <div id="tablesContainer">
         <table>
             <thead>
@@ -78,7 +78,21 @@
 
         document.getElementById('resetBtn').addEventListener('click', () => {
             if (window.confirm("Are you sure you want to reset? This will clear all time entries.")) {
-                currentTableBody.innerHTML = '';
+                const tablesContainer = document.getElementById('tablesContainer');
+                tablesContainer.innerHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Start Time</th>
+                                <th>Stop Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timeTableBody">
+                        </tbody>
+                    </table>
+                `;
+                currentTableBody = document.getElementById('timeTableBody');
                 document.getElementById('startStopBtn').textContent = 'Start';
                 isRunning = false;
                 startTime = null;
