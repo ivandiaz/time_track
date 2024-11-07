@@ -35,22 +35,26 @@
     <h1>Time Tracker</h1>
     <button id="startStopBtn">Start</button>
     <button id="resetBtn">Reset</button>
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Start Time</th>
-                <th>Stop Time</th>
-            </tr>
-        </thead>
-        <tbody id="timeTableBody">
-        </tbody>
-    </table>
+    <button id="addTableBtn">+</button>
+    <div id="tablesContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Start Time</th>
+                    <th>Stop Time</th>
+                </tr>
+            </thead>
+            <tbody id="timeTableBody">
+            </tbody>
+        </table>
+    </div>
 
     <script>
         let startTime = null;
         let isRunning = false;
         let currentRow = null;
+        let currentTableBody = document.getElementById('timeTableBody');
 
         document.getElementById('startStopBtn').addEventListener('click', () => {
             const now = new Date();
@@ -63,8 +67,8 @@
             } else {
                 // Start the timer
                 startTime = now.toLocaleTimeString();
-                currentRow = document.getElementById('timeTableBody').insertRow();
-                currentRow.insertCell(0).textContent = document.getElementById('timeTableBody').rows.length ;
+                currentRow = currentTableBody.insertRow();
+                currentRow.insertCell(0).textContent = currentTableBody.rows.length;
                 currentRow.insertCell(1).textContent = startTime;
                 currentRow.insertCell(2).textContent = '';
                 document.getElementById('startStopBtn').textContent = 'Stop';
@@ -74,12 +78,29 @@
 
         document.getElementById('resetBtn').addEventListener('click', () => {
             if (window.confirm("Are you sure you want to reset? This will clear all time entries.")) {
-                document.getElementById('timeTableBody').innerHTML = '';
+                currentTableBody.innerHTML = '';
                 document.getElementById('startStopBtn').textContent = 'Start';
                 isRunning = false;
                 startTime = null;
                 currentRow = null;
             }
+        });
+
+        document.getElementById('addTableBtn').addEventListener('click', () => {
+            const newTable = document.createElement('table');
+            newTable.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Start Time</th>
+                        <th>Stop Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            `;
+            document.getElementById('tablesContainer').appendChild(newTable);
+            currentTableBody = newTable.querySelector('tbody');
         });
     </script>
 </body>
